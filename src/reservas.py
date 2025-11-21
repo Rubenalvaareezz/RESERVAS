@@ -1,0 +1,56 @@
+from typing import NamedTuple
+from datetime import date, datetime
+import csv
+
+Reserva = NamedTuple("Reserva", 
+                     [("nombre", str),
+                      ("dni", str),
+                      ("fecha_entrada", date),
+                      ("fecha_salida", date),
+                      ("tipo_habitacion", str),
+                      ("num_personas", int),
+                      ("precio_noche", float),
+                      ("servicios_adicionales", list[str])
+                    ])
+
+
+#APARTADO 1
+
+def lee_reservas(fichero:str)->list[Reserva]:
+    with open(fichero, encoding = "utf-8") as f:
+        lista = []
+        lector = csv.reader(f)
+        next(lector)
+        for nombres, dni, fecha_entrada, fecha_salida, tipo_habitacion, num_personas, precio_noche, servicios_adicionales in lector:
+            fecha_entrada = datetime.strptime(fecha_entrada, "%Y-%m-%d").date()
+            fecha_salida = datetime.strptime(fecha_salida, "%Y-%m-%d").date()
+            num_personas = int(num_personas)
+            precio_noche = float(precio_noche)
+            servicios_adicionales = parsea_servicios(servicios_adicionales)
+            reservas = Reserva(nombres, dni, fecha_entrada, fecha_salida, tipo_habitacion, num_personas, precio_noche, servicios_adicionales)
+            lista.append(reservas)
+    return lista        
+    
+def parsea_servicios(lista_servicios:str)->list[Reserva]:
+        lista = []
+        partes = lista_servicios.split(",")
+        lista.append(partes)
+    
+        return lista
+        
+
+#APARTADO 2
+def total_facturado(reservas: list[Reserva], 
+                    fecha_ini: date | None = None, 
+                    fecha_fin: date | None = None) -> float:
+
+    facturado = 0
+    for e in reservas:
+        if fecha_ini <= e.fecha_entrada and fecha_fin>=e.fecha_salida:
+            dias = (e.fecha_salida-e.fecha_entrada).days
+            facturado += (e.precio_noche*dias)
+        else:
+            None
+    return facturado
+
+def reservas_mas_largad
