@@ -52,5 +52,12 @@ def total_facturado(reservas: list[Reserva],
         else:
             None
     return facturado
-
-def reservas_mas_largad
+#APARTADO 3
+def reservas_mas_largas(reservas: list[Reserva], n: int = 3) -> list[tuple[str, date]]:
+    lista = []
+    for e in reservas:
+        duracion=(e.fecha_salida-e.fecha_entrada).days
+        lista.append((duracion,e.nombre,e.fecha_entrada))
+    lista.sort(reverse=True)
+    return lista[:n]
+#APARTADO 4
