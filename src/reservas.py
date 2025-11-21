@@ -61,3 +61,12 @@ def reservas_mas_largas(reservas: list[Reserva], n: int = 3) -> list[tuple[str, 
     lista.sort(reverse=True)
     return lista[:n]
 #APARTADO 4
+def cliente_mayor_facturacion(reservas: list[Reserva], 
+                              servicios: set[str] | None = None) -> tuple[str, float]:
+    tupla = ()
+    facturacion = 0
+    facturacion_cliente = total_facturado(reservas)
+    for e in reservas:
+        if facturacion < facturacion_cliente:
+            facturacion += facturacion_cliente
+            
