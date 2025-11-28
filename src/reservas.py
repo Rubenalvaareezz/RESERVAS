@@ -54,6 +54,7 @@ def total_facturado(reservas: list[Reserva],
             None
     return facturado
 
+
 #APARTADO 3
 def reservas_mas_largas(reservas: list[Reserva], n: int = 3) -> list[tuple[str, date]]:
     lista = []
@@ -61,19 +62,10 @@ def reservas_mas_largas(reservas: list[Reserva], n: int = 3) -> list[tuple[str, 
         duracion=(e.fecha_salida-e.fecha_entrada).days
         lista.append((duracion,e.nombre,e.fecha_entrada))
     lista.sort(reverse=True)
+
     return [(e[1],e[-1]) for e in lista[:n]]
 
 
-#APARTADO 4
-def cliente_mayor_facturacion(reservas: list[Reserva]) -> tuple[str, float]:
 
-    indice_por_cliente = defaultdict(list)
-    for reserva in reservas:
-        indice_por_cliente[reserva.dni].append(total_facturado_cliente(reserva))
-    return indice_por_cliente
-
-
-
-def total_facturado_cliente(reserva:Reserva)->float:
-    return(reserva.precio_noche*(((reserva.fecha_salida-reserva.fecha_entrada).days)-1))
+            
 
